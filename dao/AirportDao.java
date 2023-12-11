@@ -30,8 +30,7 @@ public class AirportDao implements Dao<String, Airport> {
             """;
     private final static String UPDATE_SQL = """
             UPDATE airport
-            SET code = ?, 
-                country = ?, 
+            SET country = ?, 
                 city = ?
             WHERE code = ?
             """;
@@ -40,9 +39,9 @@ public class AirportDao implements Dao<String, Airport> {
     public boolean update(Airport airport) {
         try (var connection = ConnectionManager.get();
              var statement = connection.prepareStatement(UPDATE_SQL)) {
-            statement.setString(1, airport.getCode());
-            statement.setString(2, airport.getCountry());
-            statement.setString(3, airport.getCity());
+            statement.setString(1, airport.getCountry());
+            statement.setString(2, airport.getCity());
+            statement.setString(3, airport.getCode());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);

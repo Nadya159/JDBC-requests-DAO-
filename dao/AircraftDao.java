@@ -30,8 +30,7 @@ public class AircraftDao implements Dao<Integer, Aircraft> {
             """;
     private final static String UPDATE_SQL = """
             UPDATE aircraft
-            SET id = ?, 
-                model = ?
+            SET model = ?
             WHERE id = ?
             """;
 
@@ -39,8 +38,8 @@ public class AircraftDao implements Dao<Integer, Aircraft> {
     public boolean update(Aircraft aircraft) {
         try (var connection = ConnectionManager.get();
              var statement = connection.prepareStatement(UPDATE_SQL)) {
-            statement.setInt(1, aircraft.getId());
-            statement.setString(2, aircraft.getModel());
+            statement.setString(1, aircraft.getModel());
+            statement.setInt(2, aircraft.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -31,8 +31,7 @@ public class SeatDao implements Dao<Aircraft, Seat> {
             """;
     private final static String UPDATE_SQL = """
             UPDATE seat
-            SET aircraft_id = ?, 
-                seat_no = ?
+            SET seat_no = ?
             WHERE aircraft_id = ?
             """;
 
@@ -40,8 +39,8 @@ public class SeatDao implements Dao<Aircraft, Seat> {
     public boolean update(Seat seat) {
         try (var connection = ConnectionManager.get();
              var statement = connection.prepareStatement(UPDATE_SQL)) {
-            statement.setInt(1, seat.getAircraft().getId());
-            statement.setString(2, seat.getSeatNo());
+            statement.setString(1, seat.getSeatNo());
+            statement.setInt(2, seat.getAircraft().getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
